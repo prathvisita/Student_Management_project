@@ -1,7 +1,7 @@
 package com.pk.Student_Management_project.Controller;
 
-import com.pk.Student_Management_project.DTO.CourseDto;
-import com.pk.Student_Management_project.Entity.Course;
+import com.pk.Student_Management_project.DTO.CourseRequestDto;
+import com.pk.Student_Management_project.DTO.CourseResponseDto;
 import com.pk.Student_Management_project.Service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,18 +20,18 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<CourseDto>> getAllCourses(){
+    public ResponseEntity<List<CourseResponseDto>> getAllCourses(){
      return ResponseEntity.ok(courseService.findALL());
     }
 
-    @GetMapping("/{courseiD}")
-    public ResponseEntity<CourseDto> getCourseById(@PathVariable Long courseiD){
-        return ResponseEntity.ok().body(courseService.findCourseById(courseiD));
+    @GetMapping("/{courseid}")
+    public ResponseEntity<CourseResponseDto> getCourseById(@PathVariable Long courseid){
+        return ResponseEntity.ok().body(courseService.findCourseById(courseid));
     }
 
     @PostMapping
-    public ResponseEntity<Void> addCourse(@Valid @RequestBody CourseDto courseDto){
-        courseService.addCourse(courseDto);
+    public ResponseEntity<Void> addCourse(@Valid @RequestBody CourseRequestDto courseRequestDto){
+        courseService.addCourse(courseRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
    @DeleteMapping("/{courseid}")
@@ -41,7 +41,7 @@ public class CourseController {
    }
 
    @PutMapping("/{courseid}")
-    public ResponseEntity<CourseDto>updateCourse(@PathVariable Long Courseid,@Valid @RequestBody CourseDto courseDto){
-        return ResponseEntity.ok().body(courseService.updateCourse(Courseid,courseDto));
+    public ResponseEntity<CourseResponseDto>updateCourse(@PathVariable Long Courseid, @Valid @RequestBody CourseRequestDto courseRequestDto){
+        return ResponseEntity.ok().body(courseService.updateCourse(Courseid, courseRequestDto));
    }
 }

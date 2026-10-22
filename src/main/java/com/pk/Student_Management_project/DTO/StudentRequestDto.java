@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentDto {
+public class StudentRequestDto {
     @NotBlank(message = "Enter valid name")
     private String firstName;
 

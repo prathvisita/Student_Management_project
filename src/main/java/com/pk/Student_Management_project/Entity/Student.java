@@ -46,7 +46,7 @@ public class Student {
            inverseJoinColumns = @JoinColumn(name = "course_id")
    )
    @JsonIgnoreProperties("students")
-   Set<Course> courseList=new HashSet<>();
+   private Set<Course> courseList=new HashSet<>();
 
 
 

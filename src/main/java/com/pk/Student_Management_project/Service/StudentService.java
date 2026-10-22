@@ -1,6 +1,7 @@
 package com.pk.Student_Management_project.Service;
 
-import com.pk.Student_Management_project.DTO.StudentDto;
+import com.pk.Student_Management_project.DTO.StudentRequestDto;
+import com.pk.Student_Management_project.DTO.StudentResponseDto;
 import com.pk.Student_Management_project.Entity.Course;
 import com.pk.Student_Management_project.Entity.Student;
 import com.pk.Student_Management_project.Repository.CourseRepo;
@@ -16,55 +17,60 @@ import java.util.List;
 public class StudentService {
     private final StudentRepo studentRepo;
     private final CourseRepo courseRepo;
-    public List<StudentDto> getAllStudents() {
+    public List<StudentResponseDto> getAllStudents() {
         List<Student>students = studentRepo.findAll();
-        List<StudentDto> studentDtos = new ArrayList<>();
+        List<StudentResponseDto> studentResponseDtos = new ArrayList<>();
         for(Student student : students){
-            StudentDto studentDto=StudentDto.builder()
+            StudentResponseDto studentResponseDto = StudentResponseDto.builder()
+                    .id(student.getId())
                     .firstName(student.getFirstName())
                     .lastName(student.getLastName())
                     .email(student.getEmail())
                     .mobileNumber(student.getMobileNumber())
+                    .courses(student.getCourseList())
                     .build();
-            studentDtos.add(studentDto);
+            studentResponseDtos.add(studentResponseDto);
         }
-        return studentDtos;
+        return studentResponseDtos;
     }
 
-    public StudentDto findById(Long studentid){
+    public StudentResponseDto findById(Long studentid){
         Student student = studentRepo.findById(studentid).orElseThrow(()-> new RuntimeException("Student not found with id"+studentid));
-        StudentDto studentDto=StudentDto.builder()
+        StudentResponseDto studentResponseDto = StudentResponseDto.builder()
+                .id(student.getId())
                 .firstName(student.getFirstName())
                 .lastName(student.getLastName())
                 .email(student.getEmail())
                 .mobileNumber(student.getMobileNumber())
+                .courses(student.getCourseList())
                 .build();
-        return studentDto;
+        return studentResponseDto;
     }
 
-    public void createStudent(StudentDto studentDto){
+    public void createStudent(StudentRequestDto studentRequestDto){
         Student student=Student.builder()
-                .firstName(studentDto.getFirstName())
-                .lastName(studentDto.getLastName())
-                .email(studentDto.getEmail())
-                .mobileNumber(studentDto.getMobileNumber())
+                .firstName(studentRequestDto.getFirstName())
+                .lastName(studentRequestDto.getLastName())
+                .email(studentRequestDto.getEmail())
+                .mobileNumber(studentRequestDto.getMobileNumber())
                 .build();
         studentRepo.save(student);
     }
 
-    public StudentDto updateStudent(Long id,StudentDto studentDto){
+    public StudentResponseDto updateStudent(Long id, StudentRequestDto studentRequestDto){
         Student student=studentRepo.findById(id).orElseThrow(()-> new RuntimeException("Student not found with id"+id));
-        student.setFirstName(studentDto.getFirstName());
-        student.setLastName(studentDto.getLastName());
-        student.setEmail(studentDto.getEmail());
-        student.setMobileNumber(studentDto.getMobileNumber());
+        student.setFirstName(studentRequestDto.getFirstName());
+        student.setLastName(studentRequestDto.getLastName());
+        student.setEmail(studentRequestDto.getEmail());
+        student.setMobileNumber(studentRequestDto.getMobileNumber());
         studentRepo.save(student);
 
-        StudentDto studentdto=findById(id);
-        studentdto.setFirstName(studentDto.getFirstName());
-        studentdto.setLastName(studentDto.getLastName());
-        studentdto.setEmail(studentDto.getEmail());
-        studentdto.setMobileNumber(studentDto.getMobileNumber());
+        StudentResponseDto studentdto=findById(id);
+        studentdto.setId(student.getId());
+        studentdto.setFirstName(studentRequestDto.getFirstName());
+        studentdto.setLastName(studentRequestDto.getLastName());
+        studentdto.setEmail(studentRequestDto.getEmail());
+        studentdto.setMobileNumber(studentRequestDto.getMobileNumber());
         return studentdto;
     }
     public void deleteStudent(Long id){
@@ -75,24 +81,24 @@ public class StudentService {
         }
     }
 
-    public StudentDto enrollToCourse(Long studentid,Long courseid){
+    public StudentResponseDto enrollToCourse(Long studentid, Long courseid){
         Course course=courseRepo.findById(courseid).orElseThrow(()-> new RuntimeException("course not found with id"+courseid));
         Student student=studentRepo.findById(studentid).orElseThrow(()-> new RuntimeException("student not found with id"+studentid));
 
         student.getCourseList().add(course);
 
-        StudentDto studentdto=findById(studentid);
+        StudentResponseDto studentdto=findById(studentid);
         studentRepo.save(student);
         return studentdto;
     }
 
-    public StudentDto unenrollToCourse(Long studentid,Long courseid){
+    public StudentResponseDto unenrollToCourse(Long studentid, Long courseid){
         Course course=courseRepo.findById(courseid).orElseThrow(()-> new RuntimeException("course not found with id"+courseid));
         Student student=studentRepo.findById(studentid).orElseThrow(()-> new RuntimeException("student not found with id"+studentid));
 
         student.getCourseList().remove(course);
 
-        StudentDto studentdto=findById(studentid);
+        StudentResponseDto studentdto=findById(studentid);
         studentRepo.save(student);
         return studentdto;
     }
