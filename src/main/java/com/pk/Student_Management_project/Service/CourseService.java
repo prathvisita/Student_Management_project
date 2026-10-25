@@ -2,7 +2,7 @@ package com.pk.Student_Management_project.Service;
 
 import com.pk.Student_Management_project.DTO.CourseRequestDto;
 import com.pk.Student_Management_project.DTO.CourseResponseDto;
-import com.pk.Student_Management_project.Entity.Course;
+import com.pk.Student_Management_project.Model.Course;
 import com.pk.Student_Management_project.Repository.CourseRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ public class CourseService {
                     .courseCode(course.getCourseCode())
                     .courseDescription(course.getCourseDescription())
                     .courseCredit(course.getCourseCredit())
+                   // .student(course.getStudents())
                     .build();
             courseResponseDtoList.add(courseResponseDto);
         }

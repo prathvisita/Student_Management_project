@@ -2,11 +2,12 @@ package com.pk.Student_Management_project.Service;
 
 import com.pk.Student_Management_project.DTO.StudentRequestDto;
 import com.pk.Student_Management_project.DTO.StudentResponseDto;
-import com.pk.Student_Management_project.Entity.Course;
-import com.pk.Student_Management_project.Entity.Student;
+import com.pk.Student_Management_project.Model.Course;
+import com.pk.Student_Management_project.Model.Student;
 import com.pk.Student_Management_project.Repository.CourseRepo;
 import com.pk.Student_Management_project.Repository.StudentRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 public class StudentService {
     private final StudentRepo studentRepo;
     private final CourseRepo courseRepo;
+    @Transactional
     public List<StudentResponseDto> getAllStudents() {
         List<Student>students = studentRepo.findAll();
         List<StudentResponseDto> studentResponseDtos = new ArrayList<>();
@@ -27,7 +29,7 @@ public class StudentService {
                     .lastName(student.getLastName())
                     .email(student.getEmail())
                     .mobileNumber(student.getMobileNumber())
-                    .courses(student.getCourseList())
+                   // .courses(student.getCourseList())
                     .build();
             studentResponseDtos.add(studentResponseDto);
         }
@@ -42,7 +44,7 @@ public class StudentService {
                 .lastName(student.getLastName())
                 .email(student.getEmail())
                 .mobileNumber(student.getMobileNumber())
-                .courses(student.getCourseList())
+                //.courses(student.getCourseList())
                 .build();
         return studentResponseDto;
     }

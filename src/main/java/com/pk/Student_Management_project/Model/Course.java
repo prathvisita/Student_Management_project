@@ -1,9 +1,7 @@
-package com.pk.Student_Management_project.Entity;
+package com.pk.Student_Management_project.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -39,7 +37,8 @@ public class Course {
     @Min(value= 1,message = "credit must be min 1")
     private Integer courseCredit;
 
-    @ManyToMany(mappedBy = "courseList")
+    @Builder.Default
+    @ManyToMany(mappedBy = "courseList",fetch = FetchType.LAZY)
     @JsonIgnoreProperties("courseList")
     private Set<Student> students=new HashSet<>();
 

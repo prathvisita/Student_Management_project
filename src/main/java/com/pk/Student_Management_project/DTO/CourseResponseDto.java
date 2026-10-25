@@ -1,5 +1,7 @@
 package com.pk.Student_Management_project.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pk.Student_Management_project.Model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +20,6 @@ public class CourseResponseDto {
     private String courseCode;
     private String courseDescription;
     private Integer courseCredit;
-    private Set<StudentResponseDto> studentResponseDtoList=new HashSet<>();
+//    @JsonIgnoreProperties("courses")
+//    private Set<Student> student=new HashSet<>();
 }

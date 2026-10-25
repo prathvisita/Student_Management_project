@@ -1,10 +1,8 @@
 package com.pk.Student_Management_project.DTO;
 
-import com.pk.Student_Management_project.Entity.Course;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pk.Student_Management_project.Model.Course;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +11,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 public class StudentResponseDto {
 
     private Long  id;
@@ -20,8 +20,8 @@ public class StudentResponseDto {
     private String lastName;
     private String email;
     private Long mobileNumber;
-
-    private Set<Course> courses=new HashSet<>();
+//  @JsonIgnoreProperties("student")
+//   private Set<Course> courses=new HashSet<>();
 
 
 }
