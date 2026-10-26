@@ -71,11 +71,6 @@ public class CourseService {
 
 
         CourseResponseDto coursedto= findCourseById(courseid);
-        coursedto.setId(course.getId());
-        coursedto.setCourseName(course.getCourseName());
-        coursedto.setCourseCode(course.getCourseCode());
-        coursedto.setCourseDescription(course.getCourseDescription());
-        coursedto.setCourseCredit(course.getCourseCredit());
         courseRepo.save(course);
         return coursedto;
     }

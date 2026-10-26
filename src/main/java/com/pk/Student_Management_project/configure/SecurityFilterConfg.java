@@ -11,6 +11,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,8 +30,11 @@ public class SecurityFilterConfg {
         return http
                 .csrf(customizer -> customizer.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/api/user/register").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
+
                 .build();
 
     }
@@ -46,11 +50,15 @@ public class SecurityFilterConfg {
 //
 //        return new InMemoryUserDetailsManager(user1);
 //    }
+//   @Bean
+//   public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//        return new BCryptPasswordEncoder(12);
+//   }
 
     @Bean
     public AuthenticationProvider authenticationProvider(MyUserDetailService userDetailsService) {
             DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-            provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+            provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
             //provider.setUserDetailsService(userDetailsService);
             return provider;
         }

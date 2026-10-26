@@ -67,12 +67,13 @@ public class StudentService {
         student.setMobileNumber(studentRequestDto.getMobileNumber());
         studentRepo.save(student);
 
-        StudentResponseDto studentdto=findById(id);
-        studentdto.setId(student.getId());
-        studentdto.setFirstName(studentRequestDto.getFirstName());
-        studentdto.setLastName(studentRequestDto.getLastName());
-        studentdto.setEmail(studentRequestDto.getEmail());
-        studentdto.setMobileNumber(studentRequestDto.getMobileNumber());
+        StudentResponseDto studentdto=StudentResponseDto.builder()
+                .id(student.getId())
+                .firstName(student.getFirstName())
+                .lastName(student.getLastName())
+                .email(student.getEmail())
+                .mobileNumber(student.getMobileNumber())
+                .build();
         return studentdto;
     }
     public void deleteStudent(Long id){
