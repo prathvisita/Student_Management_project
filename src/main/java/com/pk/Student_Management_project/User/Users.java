@@ -1,4 +1,4 @@
-package com.pk.Student_Management_project.Model;
+package com.pk.Student_Management_project.User;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

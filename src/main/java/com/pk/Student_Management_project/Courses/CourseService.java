@@ -1,9 +1,6 @@
-package com.pk.Student_Management_project.Service;
+package com.pk.Student_Management_project.Courses;
 
-import com.pk.Student_Management_project.DTO.CourseRequestDto;
-import com.pk.Student_Management_project.DTO.CourseResponseDto;
-import com.pk.Student_Management_project.Model.Course;
-import com.pk.Student_Management_project.Repository.CourseRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +41,7 @@ public class CourseService {
         return courseResponseDto;
     }
 
+    @Transactional
     public void addCourse(CourseRequestDto courseRequestDto){
         Course course=Course.builder()
                 .courseName(courseRequestDto.getCourseName())
@@ -54,21 +52,24 @@ public class CourseService {
         courseRepo.save(course);
     }
 
+    @Transactional
     public void deleteCourseById(Long courseid){
         if(courseRepo.findById(courseid).isPresent()){
-            courseRepo.deleteById(courseid);
+            Course course=courseRepo.findById(courseid).orElseThrow(()-> new RuntimeException("course with id"+courseid+"not found"));
+            course.getStudents().clear();
+            courseRepo.delete(course);
         }else{
             throw new RuntimeException("course with id"+courseid+" not found");
         }
     }
 
+    @Transactional
     public CourseResponseDto updateCourse(Long courseid, CourseRequestDto courseRequestDto){
         Course course=courseRepo.findById(courseid).orElseThrow(()-> new RuntimeException("course with id"+courseid+"not found"));
         course.setCourseName(courseRequestDto.getCourseName());
         course.setCourseCode(courseRequestDto.getCourseCode());
         course.setCourseDescription(courseRequestDto.getCourseDescription());
         course.setCourseCredit(courseRequestDto.getCourseCredit());
-
 
         CourseResponseDto coursedto= findCourseById(courseid);
         courseRepo.save(course);

@@ -1,8 +1,5 @@
-package com.pk.Student_Management_project.Controller;
+package com.pk.Student_Management_project.Students;
 
-import com.pk.Student_Management_project.DTO.StudentRequestDto;
-import com.pk.Student_Management_project.DTO.StudentResponseDto;
-import com.pk.Student_Management_project.Service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

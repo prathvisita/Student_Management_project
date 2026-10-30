@@ -1,6 +1,5 @@
-package com.pk.Student_Management_project.DTO;
+package com.pk.Student_Management_project.User;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

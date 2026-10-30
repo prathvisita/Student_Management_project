@@ -1,11 +1,7 @@
-package com.pk.Student_Management_project.Service;
+package com.pk.Student_Management_project.Students;
 
-import com.pk.Student_Management_project.DTO.StudentRequestDto;
-import com.pk.Student_Management_project.DTO.StudentResponseDto;
-import com.pk.Student_Management_project.Model.Course;
-import com.pk.Student_Management_project.Model.Student;
-import com.pk.Student_Management_project.Repository.CourseRepo;
-import com.pk.Student_Management_project.Repository.StudentRepo;
+import com.pk.Student_Management_project.Courses.Course;
+import com.pk.Student_Management_project.Courses.CourseRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -49,6 +45,7 @@ public class StudentService {
         return studentResponseDto;
     }
 
+    @Transactional
     public void createStudent(StudentRequestDto studentRequestDto){
         Student student=Student.builder()
                 .firstName(studentRequestDto.getFirstName())
@@ -59,6 +56,7 @@ public class StudentService {
         studentRepo.save(student);
     }
 
+    @Transactional
     public StudentResponseDto updateStudent(Long id, StudentRequestDto studentRequestDto){
         Student student=studentRepo.findById(id).orElseThrow(()-> new RuntimeException("Student not found with id"+id));
         student.setFirstName(studentRequestDto.getFirstName());
@@ -76,14 +74,18 @@ public class StudentService {
                 .build();
         return studentdto;
     }
+
+    @Transactional
     public void deleteStudent(Long id){
         if(studentRepo.findById(id).isPresent()){
-            studentRepo.deleteById(id);
+            Student student = studentRepo.findById(id).orElseThrow(()-> new RuntimeException("Student not found with id"+id));
+            studentRepo.delete(student);
         }else{
             throw new RuntimeException("course with id"+id+" not found");
         }
     }
 
+    @Transactional
     public StudentResponseDto enrollToCourse(Long studentid, Long courseid){
         Course course=courseRepo.findById(courseid).orElseThrow(()-> new RuntimeException("course not found with id"+courseid));
         Student student=studentRepo.findById(studentid).orElseThrow(()-> new RuntimeException("student not found with id"+studentid));
@@ -95,6 +97,7 @@ public class StudentService {
         return studentdto;
     }
 
+    @Transactional
     public StudentResponseDto unenrollToCourse(Long studentid, Long courseid){
         Course course=courseRepo.findById(courseid).orElseThrow(()-> new RuntimeException("course not found with id"+courseid));
         Student student=studentRepo.findById(studentid).orElseThrow(()-> new RuntimeException("student not found with id"+studentid));

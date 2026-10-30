@@ -1,4 +1,4 @@
-package com.pk.Student_Management_project.DTO;
+package com.pk.Student_Management_project.Courses;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -1,9 +1,5 @@
-package com.pk.Student_Management_project.Controller;
+package com.pk.Student_Management_project.User;
 
-import com.pk.Student_Management_project.DTO.UserRequestDto;
-import com.pk.Student_Management_project.Model.Users;
-import com.pk.Student_Management_project.Service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,5 +17,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Users> register(@RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity.ok(userService.register(userRequestDto));
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody UserRequestDto userRequestDto) {
+        return userService.verify(userRequestDto);
     }
 }

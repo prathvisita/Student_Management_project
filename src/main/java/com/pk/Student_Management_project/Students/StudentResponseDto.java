@@ -1,11 +1,6 @@
-package com.pk.Student_Management_project.DTO;
+package com.pk.Student_Management_project.Students;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pk.Student_Management_project.Model.Course;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

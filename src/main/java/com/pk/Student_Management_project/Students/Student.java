@@ -1,6 +1,7 @@
-package com.pk.Student_Management_project.Model;
+package com.pk.Student_Management_project.Students;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pk.Student_Management_project.Courses.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +37,7 @@ public class Student {
     @Column(nullable = false)
     private Long mobileNumber;
 
-   @ManyToMany(fetch = FetchType.LAZY)
+   @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
    @Builder.Default
    @JoinTable(name="student-course",
              joinColumns =  @JoinColumn(name = "student_id"),

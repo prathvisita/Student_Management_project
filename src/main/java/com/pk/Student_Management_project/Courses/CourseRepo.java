@@ -1,6 +1,5 @@
-package com.pk.Student_Management_project.Repository;
+package com.pk.Student_Management_project.Courses;
 
-import com.pk.Student_Management_project.Model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package com.pk.Student_Management_project.Service;
+package com.pk.Student_Management_project.SpringSec;
 
-import com.pk.Student_Management_project.Model.UserPrincipal;
-import com.pk.Student_Management_project.Model.Users;
-import com.pk.Student_Management_project.Repository.UsersRepo;
+import com.pk.Student_Management_project.User.UserPrincipal;
+import com.pk.Student_Management_project.User.Users;
+import com.pk.Student_Management_project.User.UsersRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
